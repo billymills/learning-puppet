@@ -30,3 +30,8 @@ class ntp {
     source  => "/root/learning-manifests/${conf_file}",
   }
 }
+
+# then, declare it:
+
+class { 'ntp': }
+
