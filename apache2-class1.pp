@@ -27,6 +27,9 @@ class apache2 {
     path    => "/etc/httpd/conf/httpd.conf",
     ensure  => file,
     require => Package['httpd'],
-    source  => "puppet:///httpd/conf/${conf_file}", 
+    source  => "/etc/httpd/conf/${conf_file}", 
   }
 }
+
+#declare class
+class { 'apache2': }
