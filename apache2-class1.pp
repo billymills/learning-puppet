@@ -19,13 +19,14 @@ class apache2 {
   service { 'httpd':
     name => $service_name,
     ensure => running,
-    enable = > true,
+    enable => true,
     subscribe => File['httpd.conf'],
   }
 
-  file {
-    path    => "/etc/httpd/conf/httpd.conf"
+  file { 'httpd.conf':
+    path    => "/etc/httpd/conf/httpd.conf",
     ensure  => file,
     require => Package['httpd'],
     source  => "puppet:///httpd/conf/${conf_file}", 
   }
+}
