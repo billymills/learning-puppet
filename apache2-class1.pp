@@ -3,26 +3,29 @@
 class apache2 {
   case $operatingsystem {
     centos, redhat: {
-      $service_name = 'http'
-      $conf_file = 'http.conf'
+      $service_name = 'httpd'
+      $conf_file = 'httpd.conf'
     }
-    debian, unbuntu: {
-      $service_name =
-      $conf_file = 
-    }
+    #debian, unbuntu: {
+    #$service_name =
+    #$conf_file = 
+    #}
   }
 
-  package { 'http':
+  package { 'httpd':
     ensure => installed,
   }
 
-  service { 'http':
+  service { 'httpd':
     name => $service_name,
     ensure => running,
     enable = > true,
-    subscribe => File['http.conf',
+    subscribe => File['httpd.conf'],
   }
 
   file {
-
+    path    => "/etc/httpd/conf/httpd.conf"
+    ensure  => file,
+    require => Package['httpd'],
+    source  => "puppet:///httpd/conf/${conf_file}", 
   }
